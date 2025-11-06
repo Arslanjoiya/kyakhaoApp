@@ -7,6 +7,8 @@
 
 import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import React from 'react';
+import SplashScreen from './src/screens/SplashScreen';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -25,13 +27,18 @@ function App() {
 
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
+  const [showSplash, setShowSplash] = React.useState(true);
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      {showSplash ? (
+        <SplashScreen onFinish={() => setShowSplash(false)} />
+      ) : (
+        <NewAppScreen
+          templateFileName="App.tsx"
+          safeAreaInsets={safeAreaInsets}
+        />
+      )}
     </View>
   );
 }

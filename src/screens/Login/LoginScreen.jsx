@@ -1,0 +1,19 @@
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import CommonButton from '../../components/CommonButton/CommonButton';
+
+const LoginScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login Screen</Text>
+      <CommonButton title="Continue to Home" onPress={() => navigation?.navigate('Home')} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
+  title: { fontSize: 22, marginBottom: 16 },
+});
+
+export default LoginScreen;
