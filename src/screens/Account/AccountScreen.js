@@ -64,10 +64,23 @@ const AccountScreen = ({ navigation }) => {
                   <Text style={styles.statNumber}>258</Text>
                   <Text style={styles.statLabel}>Followers</Text>
                 </View>
-                <View style={styles.statItem}>
+                <TouchableOpacity
+                  style={styles.statItem}
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    navigation.navigate('Following', {
+                      profile: {
+                        name: 'Spice Route Kitchen',
+                        location: 'Lahore, Pakistan',
+                        followers: 837,
+                        following: 92,
+                      },
+                    })
+                  }
+                >
                   <Text style={styles.statNumber}>83</Text>
                   <Text style={styles.statLabel}>Following</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.statItem}>
                   <Text style={styles.statNumber}>79</Text>
                   <Text style={styles.statLabel}>Favorites</Text>

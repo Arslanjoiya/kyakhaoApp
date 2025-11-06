@@ -46,7 +46,7 @@ const ReservationScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.primaryBtn}
                 activeOpacity={0.9}
-                onPress={() => {}}
+                onPress={() => navigation.navigate('ReserveTable', { restaurantId: 'r1' })}
               >
                 <Text style={styles.primaryBtnText}>Reserve Now</Text>
               </TouchableOpacity>
