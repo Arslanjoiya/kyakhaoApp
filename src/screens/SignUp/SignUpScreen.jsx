@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Input from '../../components/Input/Input';
 import UserIcon from '../../components/Icons/UserIcon';
+import EmailIcon from '../../components/Icons/EmailIcon';
 import LockIcon from '../../components/Icons/LockIcon';
 
 const SignUpScreen = ({ navigation }) => {
@@ -42,6 +43,8 @@ const SignUpScreen = ({ navigation }) => {
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          bounces={false}
         >
           <View style={styles.content}>
             <View style={styles.header}>
@@ -63,7 +66,7 @@ const SignUpScreen = ({ navigation }) => {
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
-                icon={UserIcon}
+                icon={EmailIcon}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -125,8 +128,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   scrollContent: {
-    width: '100%',
-    height: '100%',
+    flexGrow: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingTop: 160,
