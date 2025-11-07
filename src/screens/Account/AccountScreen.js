@@ -1,23 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, StatusBar } from 'react-native';
-import BottomTabBar from '../../components/Home/BottomTabBar';
 
 const AccountScreen = ({ navigation }) => {
-  const [activeTab, setActiveTab] = useState('Account');
   const [activeContentTab, setActiveContentTab] = useState('Collections');
-
-  const handlePressTab = (key) => {
-    setActiveTab(key);
-    if (key === 'Home') {
-      navigation.navigate('Home');
-    } else if (key === 'Reservation') {
-      navigation.navigate('Reservation');
-    } else if (key === 'Notifications') {
-      navigation.navigate('Notifications');
-    } else if (key === 'Account') {
-      return; // Already on this screen
-    }
-  };
 
   const collections = [
     { id: '1', title: 'For My Lovely', recipeCount: 172 },
@@ -162,11 +147,6 @@ const AccountScreen = ({ navigation }) => {
           <View style={styles.bottomSpacer} />
         </View>
       </ScrollView>
-
-      {/* Bottom Tab Bar */}
-      <View style={styles.tabBarContainer}>
-        <BottomTabBar activeKey={activeTab} onPressTab={handlePressTab} />
-      </View>
     </View>
   );
 };
@@ -398,12 +378,6 @@ const styles = StyleSheet.create({
   },
   bottomSpacer: {
     height: 88,
-  },
-  tabBarContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
 });
 

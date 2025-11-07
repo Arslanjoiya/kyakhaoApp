@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import BottomTabBar from '../../components/Home/BottomTabBar';
 
 const ReservationScreen = ({ navigation }) => {
-  const [activeTab, setActiveTab] = useState('Reservation');
-
-  const handlePressTab = (key) => {
-    setActiveTab(key);
-    if (key === 'Home') navigation.navigate('Home');
-    if (key === 'Reservation') return;
-    if (key === 'Notifications') navigation.navigate('Notifications');
-    if (key === 'Account') navigation.navigate('Account');
-  };
 
   return (
     <View style={styles.screen}>
@@ -64,10 +54,6 @@ const ReservationScreen = ({ navigation }) => {
         <Image source={require('../../assets/images/topimage1.png')} style={styles.imageLarge} resizeMode="cover" />
         <View style={styles.bottomSpacer} />
       </ScrollView>
-
-      <View style={styles.tabBarContainer}>
-        <BottomTabBar activeKey={activeTab} onPressTab={handlePressTab} />
-      </View>
     </View>
   );
 };
@@ -143,7 +129,6 @@ const styles = StyleSheet.create({
 
   imageLarge: { width: '92%', height: 220, borderRadius: 12, alignSelf: 'center', marginTop: 16 },
   bottomSpacer: { height: 88 },
-  tabBarContainer: { position: 'absolute', left: 0, right: 0, bottom: 0 },
 });
 
 export default ReservationScreen;

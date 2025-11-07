@@ -1,35 +1,78 @@
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+const slides = [
+  {
+    image: require('../../assets/images/Mask.png'),
+    title: 'Discover from the best',
+    subtitle: 'Discover delicious recipes from around the world with inspiring chefs',
+  },
+  {
+    image: require('../../assets/images/Mask (1).png'),
+    title: 'Cook with confidence',
+    subtitle: 'Step-by-step guides and expert tips to master any cuisine',
+  },
+  {
+    image: require('../../assets/images/Mask (2).png'),
+    title: 'Share your creations',
+    subtitle: 'Join a community of food lovers and showcase your culinary skills',
+  },
+];
 
 const OnboardingScreen = ({ navigation }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollViewRef = useRef(null);
+
+  const handleScroll = (event) => {
+    const slideIndex = Math.round(event.nativeEvent.contentOffset.x / SCREEN_WIDTH);
+    setCurrentIndex(slideIndex);
+  };
+
   return (
-    <ImageBackground source={require('../../assets/images/Mask.png')} style={styles.background} resizeMode="cover">
-      <View style={styles.content}>
-        <View style={styles.centerBlock}>
-          <Text style={styles.title}>Discover from the best</Text>
-          <Text style={styles.subtitle}>Discover delicious recipes from around the world with inspiring chefs</Text>
+    <View style={styles.container}>
+      <ScrollView
+        ref={scrollViewRef}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        style={styles.scrollView}
+      >
+        {slides.map((slide, index) => (
+          <ImageBackground key={index} source={slide.image} style={styles.background} resizeMode="cover">
+            <View style={styles.content}>
+              <View style={styles.centerBlock}>
+                <Text style={styles.title}>{slide.title}</Text>
+                <Text style={styles.subtitle}>{slide.subtitle}</Text>
+              </View>
+            </View>
+          </ImageBackground>
+        ))}
+      </ScrollView>
+
+      {/* Fixed buttons and dots overlay */}
+      <View style={styles.buttonsContainer} pointerEvents="box-none">
+        {/* pagination dots above buttons */}
+        <View style={styles.dotsContainer} pointerEvents="none">
+          {slides.map((_, index) => (
+            <View
+              key={index}
+              style={[styles.dot, currentIndex === index && styles.activeDot]}
+            />
+          ))}
         </View>
 
-        {/* Buttons fixed near bottom */}
-        <View style={styles.buttonsContainer} pointerEvents="box-none">
-          {/* pagination dots above buttons */}
-          <View style={styles.dotsContainer} pointerEvents="none">
-            <View style={[styles.dot, styles.activeDot]} />
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-          </View>
+        <View style={styles.buttonsRow}>
+          <TouchableOpacity style={styles.signUp} onPress={() => navigation?.navigate('SignUp')}>
+            <Text style={styles.signUpText}>Sign Up</Text>
+          </TouchableOpacity>
 
-          <View style={styles.buttonsRow}>
-            <TouchableOpacity style={styles.signUp} onPress={() => navigation?.navigate('Mask2')}>
-              <Text style={styles.signUpText}>Sign Up</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.signIn} onPress={() => navigation?.navigate('SignIn')}>
-              <Text style={styles.signInText}>Sign In</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* inline terms removed; will position absolutely below */}
+          <TouchableOpacity style={styles.signIn} onPress={() => navigation?.navigate('SignIn')}>
+            <Text style={styles.signInText}>Sign In</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -37,12 +80,14 @@ const OnboardingScreen = ({ navigation }) => {
       <View style={styles.termsWrapper} pointerEvents="none">
         <Text style={styles.termsText}>By joining you agree to our Terms of Service and Privacy Policy</Text>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  background: { flex: 1, width: '100%', height: '100%' },
+  container: { flex: 1 },
+  scrollView: { flex: 1 },
+  background: { flex: 1, width: SCREEN_WIDTH, height: '100%' },
   // center content vertically and horizontally
   content: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: 'rgba(0,0,0,0.25)' },
   title: { color: '#fff', fontSize: 28, fontWeight: '700', marginBottom: 8, textAlign: 'center' },
