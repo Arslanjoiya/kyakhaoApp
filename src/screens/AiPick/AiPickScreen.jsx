@@ -1,70 +1,66 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, PanResponder, Animated } from 'react-native';
-import BottomTabBar from '../../components/Home/BottomTabBar';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, PanResponder, Animated, Image, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AiPickScreen = ({ navigation }) => {
-  const [activeTab, setActiveTab] = useState('AiPick');
-
-  const handlePressTab = (key) => {
-    setActiveTab(key);
-    if (key === 'Home') navigation.navigate('Home');
-    if (key === 'Reservation') navigation.navigate('Reservation');
-    if (key === 'Notifications') navigation.navigate('Notifications');
-    if (key === 'Account') navigation.navigate('Account');
-  };
-
   const [price, setPrice] = useState(0.35); // 0..1
   const [spice, setSpice] = useState(0.2); // 0..1
 
   const priceValue = Math.round(5 + price * (100 - 5));
   const spiceValue = Math.round(spice * 5);
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={styles.screen}>
+    <SafeAreaView style={[styles.screen, { paddingBottom: Math.max(insets.bottom, 16) }] }>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 8, left: 8, right: 8, bottom: 8 }}>
-          <Text style={styles.backIcon}>‹</Text>
-        </TouchableOpacity>
-        <TouchableOpacity hitSlop={{ top: 8, left: 8, right: 8, bottom: 8 }}>
-          <Text style={styles.moreIcon}>⋯</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.title}>Ai Pick</Text>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 8, left: 8, right: 8, bottom: 8 }}>
+            <Text style={styles.backIcon}>‹</Text>
+          </TouchableOpacity>
+          <TouchableOpacity hitSlop={{ top: 8, left: 8, right: 8, bottom: 8 }}>
+            <Text style={styles.moreIcon}>⋯</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>Ai Pick</Text>
 
-      {/* Filters */}
-      <View style={styles.filters}>
-        <FilterButton label="All Cuisines" />
-        <FilterButton label="All Meal Types" />
-        <FilterButton label="All Dietary" />
-      </View>
+        {/* Filters */}
+        <View style={styles.filters}>
+          <FilterButton label="All Cuisines" />
+          <FilterButton label="All Meal Types" />
+          <FilterButton label="All Dietary" />
+        </View>
 
-      {/* Price Range */}
-      <View style={styles.section}>
-        <Text style={styles.sectionLabel}>Price Range: ${priceValue} - $100</Text>
-        <SimpleSlider value={price} onChange={setPrice} />
-      </View>
+        {/* Price Range */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Price Range: ${priceValue} - $100</Text>
+          <SimpleSlider value={price} onChange={setPrice} />
+        </View>
 
-      {/* Spice Level */}
-      <View style={styles.section}>
-        <Text style={styles.sectionLabel}>Spice Level: {spiceValue} / 5</Text>
-        <SimpleSlider value={spice} onChange={setSpice} />
-      </View>
+        {/* Spice Level */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Spice Level: {spiceValue} / 5</Text>
+          <SimpleSlider value={spice} onChange={setSpice} />
+        </View>
 
-      {/* Actions */}
-      <View style={styles.actionsRow}>
-        <TouchableOpacity style={[styles.button, styles.buttonGhost]} activeOpacity={0.8}>
-          <Text style={[styles.buttonText, styles.buttonGhostText]}>Clear Filters</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.buttonPrimary]} activeOpacity={0.8}>
-          <Text style={[styles.buttonText, styles.buttonPrimaryText]}>Apply Filters</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Actions */}
+        <View style={styles.actionsRow}>
+          <TouchableOpacity style={[styles.button, styles.buttonGhost]} activeOpacity={0.8}>
+            <Text style={[styles.buttonText, styles.buttonGhostText]}>Clear Filters</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonPrimary]} activeOpacity={0.8}>
+            <Text style={[styles.buttonText, styles.buttonPrimaryText]}>Apply Filters</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Bottom Tab Bar */}
-      <View style={styles.tabBarContainer}>
-        <BottomTabBar activeKey={activeTab} onPressTab={handlePressTab} />
-      </View>
+        {/* Featured Images */}
+        <View style={styles.imageRow}>
+          <Image source={require('../../assets/icons/main.png')} style={styles.mainImage} resizeMode="cover" />
+          <Image source={require('../../assets/icons/main1.png')} style={styles.mainImage} resizeMode="cover" />
+        </View>
+      </ScrollView>
+
     </SafeAreaView>
   );
 };
@@ -157,6 +153,9 @@ const SimpleSlider = ({ value, onChange }) => {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#fff' },
+  content: {
+    paddingBottom: 32,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -183,8 +182,15 @@ const styles = StyleSheet.create({
 
   section: { paddingHorizontal: 16, marginTop: 20 },
   sectionLabel: { fontSize: 13, color: '#666', marginBottom: 8 },
-  sliderTrackOuter: { height: 10, backgroundColor: '#fdecec', borderRadius: 8, justifyContent: 'center' },
-  sliderTrackInner: { position: 'absolute', left: 0, height: 3, backgroundColor: '#EF4444', marginLeft: 16, borderRadius: 2 },
+  sliderTrackOuter: {
+    height: 10,
+    width: '100%',
+    backgroundColor: '#fdecec',
+    borderRadius: 8,
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  sliderTrackInner: { position: 'absolute', left: 0, height: '100%', backgroundColor: '#EF4444' },
   sliderThumb: {
     position: 'absolute',
     width: 16,
@@ -201,8 +207,19 @@ const styles = StyleSheet.create({
   buttonGhostText: { color: '#111', fontWeight: '600' },
   buttonPrimary: { backgroundColor: '#E53935' },
   buttonPrimaryText: { color: '#fff', fontWeight: '700' },
+  imageRow: {
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: 16,
+    marginTop: 28,
+    paddingBottom: 32,
+  },
+  mainImage: {
+    flex: 1,
+    height: 180,
+    borderRadius: 16,
+  },
 
-  tabBarContainer: { position: 'absolute', left: 0, right: 0, bottom: 0 },
 });
 
 export default AiPickScreen;
