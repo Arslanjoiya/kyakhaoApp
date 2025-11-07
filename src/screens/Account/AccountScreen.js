@@ -1,12 +1,98 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, StatusBar } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, StatusBar, FlatList } from 'react-native';
+import DishCard from '../../components/DishCard/DishCard';
+import CollectionCard from '../../components/CollectionCard/CollectionCard';
+import PhotoCard from '../../components/PhotoCard/PhotoCard';
 
 const AccountScreen = ({ navigation }) => {
-  const [activeContentTab, setActiveContentTab] = useState('Collections');
+  const [activeContentTab, setActiveContentTab] = useState('Recipes');
+  const [likedDishes, setLikedDishes] = useState({});
+  const [likedPhotos, setLikedPhotos] = useState({});
+  const [likedCollections, setLikedCollections] = useState({});
+
+  const dishes = useMemo(
+    () => [
+      {
+        id: 'd1',
+        image: require('../../assets/images/Homeimage1.png'),
+        title: 'Classic Spaghetti Carbonara',
+        category: 'Breakfast',
+        time: '26 minutes',
+        rating: 4.5,
+      },
+      {
+        id: 'd2',
+        image: require('../../assets/images/Homeimage2.png'),
+        title: 'Berry Fruity Angel Cake Parfait',
+        category: 'Snacks',
+        time: '50 minutes',
+        rating: 4.5,
+      },
+      {
+        id: 'd3',
+        image: require('../../assets/images/Homeimage3.png'),
+        title: 'Classic Spaghetti Carbonara',
+        category: 'Breakfast',
+        time: '26 minutes',
+        rating: 4.5,
+      },
+      {
+        id: 'd4',
+        image: require('../../assets/images/Homeimage4.png'),
+        title: 'Berry Fruity Angel Cake Parfait',
+        category: 'Snacks',
+        time: '50 minutes',
+        rating: 4.5,
+      },
+    ],
+    []
+  );
+
+  const photos = useMemo(
+    () => [
+      { id: 'p1', img: require('../../assets/images/Homeimage4.png'), caption: '2 days ago' },
+      { id: 'p2', img: require('../../assets/images/Homeimage2.png'), caption: '5 days ago' },
+      { id: 'p3', img: require('../../assets/images/Homeimage1.png'), caption: '3 months ago' },
+      { id: 'p4', img: require('../../assets/images/Homeimage3.png'), caption: '4 months ago' },
+      { id: 'p5', img: require('../../assets/images/Homeimage2.png'), caption: '6 months ago' },
+      { id: 'p6', img: require('../../assets/images/Homeimage4.png'), caption: '8 months ago' },
+    ],
+    []
+  );
+
+  const handleToggleLike = (tab, id) => {
+    if (tab === 'Recipes') {
+      setLikedDishes((prev) => ({ ...prev, [id]: !prev[id] }));
+    } else if (tab === 'Photos') {
+      setLikedPhotos((prev) => ({ ...prev, [id]: !prev[id] }));
+    } else if (tab === 'Collections') {
+      setLikedCollections((prev) => ({ ...prev, [id]: !prev[id] }));
+    }
+  };
 
   const collections = [
-    { id: '1', title: 'For My Lovely', recipeCount: 172 },
-    { id: '2', title: 'Cook Fast', recipeCount: 241 },
+    {
+      id: '1',
+      title: 'For My Lovely',
+      recipeCount: 172,
+      images: [
+        require('../../assets/images/Homeimage1.png'),
+        require('../../assets/images/Homeimage2.png'),
+        require('../../assets/images/Homeimage3.png'),
+        require('../../assets/images/Homeimage4.png'),
+      ],
+    },
+    {
+      id: '2',
+      title: 'Cook Fast',
+      recipeCount: 241,
+      images: [
+        require('../../assets/images/Homeimage4.png'),
+        require('../../assets/images/Homeimage3.png'),
+        require('../../assets/images/Homeimage2.png'),
+        require('../../assets/images/Homeimage1.png'),
+      ],
+    },
   ];
 
   return (
@@ -45,10 +131,14 @@ const AccountScreen = ({ navigation }) => {
                 <Text style={styles.location}>Sydney, Australia</Text>
               </View>
               <View style={styles.statsRow}>
-                <View style={styles.statItem}>
+                <TouchableOpacity
+                  style={styles.statItem}
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('Followers')}
+                >
                   <Text style={styles.statNumber}>258</Text>
                   <Text style={styles.statLabel}>Followers</Text>
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.statItem}
                   activeOpacity={0.8}
@@ -66,10 +156,14 @@ const AccountScreen = ({ navigation }) => {
                   <Text style={styles.statNumber}>83</Text>
                   <Text style={styles.statLabel}>Following</Text>
                 </TouchableOpacity>
-                <View style={styles.statItem}>
+                <TouchableOpacity
+                  style={styles.statItem}
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('FavoritesDetails')}
+                >
                   <Text style={styles.statNumber}>79</Text>
                   <Text style={styles.statLabel}>Favorites</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -78,23 +172,23 @@ const AccountScreen = ({ navigation }) => {
         {/* Content Area */}
         <View style={styles.contentArea}>
           {/* Tab Bar */}
-          <View style={styles.tabBar}>
+          <View style={styles.tabsContainer}>
             <TouchableOpacity
-              style={[styles.tab, activeContentTab === 'Recipes' && styles.tabActive]}
+              style={[styles.tabItem, styles.tabItemLeft, activeContentTab === 'Recipes' && styles.tabItemActive]}
               onPress={() => setActiveContentTab('Recipes')}
               activeOpacity={0.8}
             >
               <Text style={[styles.tabText, activeContentTab === 'Recipes' && styles.tabTextActive]}>Recipes</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.tab, activeContentTab === 'Photos' && styles.tabActive]}
+              style={[styles.tabItem, activeContentTab === 'Photos' && styles.tabItemActive]}
               onPress={() => setActiveContentTab('Photos')}
               activeOpacity={0.8}
             >
               <Text style={[styles.tabText, activeContentTab === 'Photos' && styles.tabTextActive]}>Photos</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.tab, activeContentTab === 'Collections' && styles.tabActive, styles.tabLast]}
+              style={[styles.tabItem, styles.tabItemRight, activeContentTab === 'Collections' && styles.tabItemActive]}
               onPress={() => setActiveContentTab('Collections')}
               activeOpacity={0.8}
             >
@@ -102,46 +196,94 @@ const AccountScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Collections Content */}
-          {activeContentTab === 'Collections' && (
-            <View style={styles.collectionsContainer}>
-              <Text style={styles.collectionsCount}>{collections.length} collections</Text>
-              <View style={styles.collectionsGrid}>
-                {collections.map((collection) => (
-                  <View key={collection.id} style={styles.collectionCard}>
-                    <View style={styles.collectionImageContainer}>
-                      <View style={styles.collectionImageLeft} />
-                      <View style={styles.collectionImageRight}>
-                        <View style={styles.collectionImageRightTop} />
-                        <View style={styles.collectionImageRightBottom} />
-                      </View>
+          <View style={styles.dishesHeaderRow}>
+            <Text
+              style={[
+                styles.dishesCount,
+                activeContentTab === 'Photos' && styles.countWider,
+                activeContentTab === 'Collections' && styles.countWidest,
+              ]}
+            >
+              {activeContentTab === 'Recipes'
+                ? `${dishes.length} recipes`
+                : activeContentTab === 'Photos'
+                ? `${photos.length} photos`
+                : `${collections.length} collections`}
+            </Text>
+          </View>
+
+          {activeContentTab === 'Recipes' && (
+            <View style={styles.dishesContainer}>
+              {dishes.reduce((rows, dish, index) => {
+                if (index % 2 === 0) {
+                  rows.push([dish]);
+                } else {
+                  rows[rows.length - 1].push(dish);
+                }
+                return rows;
+              }, []).map((row, rowIndex) => (
+                <View key={`row-${rowIndex}`} style={[styles.dishesGridRow, rowIndex > 0 && { marginTop: 16 }]}>
+                  {row.map((dish) => (
+                    <View key={dish.id} style={styles.dishCardWrapper}>
+                      <DishCard
+                        image={dish.image}
+                        title={dish.title}
+                        category={dish.category}
+                        time={dish.time}
+                        rating={dish.rating}
+                        liked={likedDishes[dish.id] || false}
+                        onToggleLike={() => handleToggleLike('Recipes', dish.id)}
+                      />
                     </View>
-                    <Text style={styles.collectionTitle}>{collection.title}</Text>
-                    <Text style={styles.collectionRecipeCount}>{collection.recipeCount} recipes</Text>
+                  ))}
+                  {row.length === 1 && <View style={styles.dishCardWrapper} />}
+                </View>
+              ))}
+            </View>
+          )}
+
+          {activeContentTab === 'Collections' && (
+            <View style={styles.collectionsContent}>
+              <View style={styles.collectionsRow}>
+                {collections.map((collection) => (
+                  <View key={collection.id} style={styles.collectionWrapper}>
+                    <CollectionCard
+                      images={collection.images}
+                      title={collection.title}
+                      recipesCount={collection.recipeCount}
+                      liked={likedCollections[collection.id] || false}
+                      onToggleLike={() => handleToggleLike('Collections', collection.id)}
+                    />
                   </View>
                 ))}
-                <TouchableOpacity style={styles.createCollectionCard} activeOpacity={0.8}>
-                  <View style={styles.createIconContainer}>
-                    <Text style={styles.createIcon}>+</Text>
-                  </View>
-                  <Text style={styles.createText}>Create New{'\n'}Collection</Text>
-                </TouchableOpacity>
               </View>
+              <TouchableOpacity style={styles.createCollectionCard} activeOpacity={0.8}>
+                <View style={styles.createIconContainer}>
+                  <Text style={styles.createIcon}>+</Text>
+                </View>
+                <Text style={styles.createText}>Create New{'\n'}Collection</Text>
+              </TouchableOpacity>
             </View>
           )}
 
-          {/* Recipes Content Placeholder */}
-          {activeContentTab === 'Recipes' && (
-            <View style={styles.emptyContent}>
-              <Text style={styles.emptyText}>Recipes content coming soon</Text>
-            </View>
-          )}
-
-          {/* Photos Content Placeholder */}
           {activeContentTab === 'Photos' && (
-            <View style={styles.emptyContent}>
-              <Text style={styles.emptyText}>Photos content coming soon</Text>
-            </View>
+            <FlatList
+              data={photos}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+              columnWrapperStyle={styles.photosRow}
+              contentContainerStyle={styles.photosContainer}
+              showsVerticalScrollIndicator={false}
+              scrollEnabled={false}
+              renderItem={({ item }) => (
+                <PhotoCard
+                  image={item.img}
+                  caption={item.caption}
+                  liked={likedPhotos[item.id] || false}
+                  onToggleLike={() => handleToggleLike('Photos', item.id)}
+                />
+              )}
+            />
           )}
 
           <View style={styles.bottomSpacer} />
@@ -250,100 +392,89 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
   },
-  tabBar: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    paddingLeft: 16,
-    paddingRight: 0,
-  },
-  tab: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    marginRight: 8,
-  },
-  tabActive: {
-    backgroundColor: '#E53935',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  tabLast: {
-    flex: 1,
-    marginRight: 0,
-    marginLeft: 0,
-    paddingRight: 16,
-  },
   tabText: {
     fontSize: 14,
+    fontWeight: '700',
     color: '#000',
-    fontWeight: '600',
   },
   tabTextActive: {
     color: '#fff',
   },
-  collectionsContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  collectionsCount: {
-    fontSize: 14,
-    color: '#000',
-    marginBottom: 16,
-  },
-  collectionsGrid: {
+  tabsContainer: {
+    marginTop: 16,
+    alignSelf: 'center',
+    width: 343,
+    height: 36,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    backgroundColor: '#fff',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  collectionCard: {
-    width: '48%',
-    marginBottom: 16,
-  },
-  collectionImageContainer: {
-    flexDirection: 'row',
-    height: 140,
-    marginBottom: 12,
-    borderRadius: 8,
     overflow: 'hidden',
   },
-  collectionImageLeft: {
-    flex: 2,
-    backgroundColor: '#E0E0E0',
-  },
-  collectionImageRight: {
+  tabItem: {
     flex: 1,
-    marginLeft: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  collectionImageRightTop: {
-    flex: 1,
-    backgroundColor: '#D0D0D0',
-    marginBottom: 2,
+  tabItemLeft: {
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
-  collectionImageRightBottom: {
-    flex: 1,
-    backgroundColor: '#D0D0D0',
+  tabItemRight: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
   },
-  collectionTitle: {
-    fontSize: 14,
+  tabItemActive: {
+    backgroundColor: '#E53935',
+  },
+  dishesHeaderRow: {
+    paddingTop: 18,
+    paddingHorizontal: 16,
+  },
+  dishesCount: {
+    fontSize: 16,
     fontWeight: '600',
-    color: '#000',
-    marginBottom: 4,
+    color: '#737373',
   },
-  collectionRecipeCount: {
-    fontSize: 12,
-    color: '#888',
+  countWider: {
+    width: 120,
+  },
+  countWidest: {
+    width: 140,
+  },
+  dishesContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+  },
+  dishesGridRow: {
+    flexDirection: 'row',
+    columnGap: 17,
+  },
+  dishCardWrapper: {
+    flex: 1,
+  },
+  collectionsContent: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+  },
+  collectionsRow: {
+    flexDirection: 'row',
+    columnGap: 17,
+    paddingBottom: 16,
+  },
+  collectionWrapper: {
+    flex: 1,
   },
   createCollectionCard: {
-    width: '48%',
+    marginTop: 8,
     height: 140,
     borderWidth: 1,
     borderColor: '#E53935',
-    borderRadius: 8,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    marginBottom: 16,
   },
   createIconContainer: {
     width: 48,
@@ -366,15 +497,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 16,
   },
-  emptyContent: {
-    padding: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 200,
+  photosContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 16,
   },
-  emptyText: {
-    fontSize: 14,
-    color: '#888',
+  photosRow: {
+    justifyContent: 'flex-start',
+    columnGap: 17,
+    marginBottom: 16,
   },
   bottomSpacer: {
     height: 88,

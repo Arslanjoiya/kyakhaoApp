@@ -28,6 +28,9 @@ import SettingsScreen from '../screens/Settings/SettingsScreen';
 import AllDishesScreen from '../screens/AllDishes/AllDishesScreen';
 import AiPickScreen from '../screens/AiPick/AiPickScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
+import FollowingScreen from '../screens/Following/FollowingScreen';
+import FavoritesDetailsScreen from '../screens/FavoritesDetailsScreen';
+import FollowersScreen from '../screens/FollowersScreen';
 
 // NOTE: This file assumes you have installed @react-navigation/native and related packages.
 // If not, keep this as a scaffold or replace with your own navigator.
@@ -92,7 +95,7 @@ const MainTabs = () => (
     />
     <Tab.Screen
       name="AiPick"
-      component={HomeScreen}
+      component={AiPickScreen}
       options={{
         tabBarLabel: 'Ai Pick',
         tabBarIcon: ({ color, size }) => (
@@ -161,10 +164,9 @@ const AppNavigator = () => (
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
       <Stack.Screen name="AiPick" component={AiPickScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="ReserveTable" component={ReserveTableScreen} />
-      <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} />
-      <Stack.Screen name="PaymentSetup" component={PaymentSetupScreen} />
-      <Stack.Screen name="ReservationReceipt" component={ReservationReceiptScreen} />
+      <Stack.Screen name="Following" component={FollowingScreen} />
+      <Stack.Screen name="FavoritesDetails" component={FavoritesDetailsScreen} />
+      <Stack.Screen name="Followers" component={FollowersScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
