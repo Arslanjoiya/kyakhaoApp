@@ -14,6 +14,49 @@ import useReservationForm from '../../state/reservations/useReservationForm';
 const ReserveTableScreen = ({ navigation, route }) => {
   const { form, handlers, slots, restaurants, submit, submitting } = useReservationForm(route?.params || {});
 
+  const handleReserve = async () => {
+    const result = await submit();
+    if (!result) {
+      return;
+    }
+
+    const restaurant = restaurants.find((r) => r.id === form.restaurantId) || {};
+    const dateText = form.date
+      ? new Date(form.date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      : undefined;
+
+    const plan = form.addDecor
+      ? {
+          title: 'Premium Dining',
+          benefits: ['Luxe floral arrangement', 'Signature dessert surprise', 'VIP seating décor'],
+          note: 'Enjoy premium styling and celebratory treats.',
+        }
+      : {
+          title: 'Standard Dining',
+          benefits: ['25+ fresh flowers', 'Rose-petal centerpiece', 'LED candle set'],
+          note: 'Upgrade for exclusive benefits!',
+        };
+
+    navigation.navigate('ReservationConfirmation', {
+      reservation: {
+        id: result.id,
+        restaurantName: restaurant.name || 'Selected Restaurant',
+        address: restaurant.address,
+        date: form.date,
+        dateText,
+        timeSlot: form.timeSlotId,
+        guests: form.guests,
+        table: restaurant.defaultTable,
+      },
+      plan,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
@@ -52,7 +95,7 @@ const ReserveTableScreen = ({ navigation, route }) => {
           <DecorPicker value={form.addDecor} onChange={handlers.setAddDecor} />
         </FormSection>
 
-        <PrimaryButton title="Reserve Table" onPress={submit} loading={submitting} style={{ marginTop: 12 }} />
+        <PrimaryButton title="Reserve Table" onPress={handleReserve} loading={submitting} style={{ marginTop: 12 }} />
         <SecondaryButton title="Cancel" onPress={() => navigation.goBack()} style={{ marginTop: 12 }} />
       </ScrollView>
     </SafeAreaView>

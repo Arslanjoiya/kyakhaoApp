@@ -18,6 +18,10 @@ import ChooseLanguageScreen from '../screens/ChooseLanguage/ChooseLanguageScreen
 import PersonalizationScreen from '../screens/Personalization/PersonalizationScreen';
 import ChoicesFoodScreen from '../screens/ChoicesFood/ChoicesFoodScreen';
 import ReservationScreen from '../screens/Reservation/ReservationScreen';
+import ReserveTableScreen from '../screens/ReserveTable/ReserveTableScreen';
+import ReservationConfirmationScreen from '../screens/ReservationConfirmation/ReservationConfirmationScreen';
+import PaymentSetupScreen from '../screens/Payment/PaymentSetupScreen';
+import ReservationReceiptScreen from '../screens/ReservationReceipt/ReservationReceiptScreen';
 import NotificationsScreen from '../screens/Notifications/NotificationsScreen';
 import AccountScreen from '../screens/Account/AccountScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
@@ -157,6 +161,10 @@ const AppNavigator = () => (
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
       <Stack.Screen name="AiPick" component={AiPickScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="ReserveTable" component={ReserveTableScreen} />
+      <Stack.Screen name="ReservationConfirmation" component={ReservationConfirmationScreen} />
+      <Stack.Screen name="PaymentSetup" component={PaymentSetupScreen} />
+      <Stack.Screen name="ReservationReceipt" component={ReservationReceiptScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
