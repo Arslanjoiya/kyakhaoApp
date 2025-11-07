@@ -10,7 +10,11 @@ const HomeHeader = ({ onPressSearch, onSelectCategory }) => {
       <View style={styles.topRow}>
         <Image source={require('../../assets/images/finalLogo.png')} style={styles.logo} />
         <TouchableOpacity onPress={onPressSearch} hitSlop={{ top: 8, left: 8, right: 8, bottom: 8 }}>
-          <Text style={styles.search}>○</Text>
+          <Image
+            source={require('../../assets/icons/IconSearch.png')}
+            style={styles.searchIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsRow}>
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   logo: { width: 140, height: 40, resizeMode: 'contain', marginLeft: 0 },
-  search: { fontSize: 28, color: '#000', marginRight: 16 },
+  searchIcon: { width: 18, height: 18, marginRight: 16 },
   tabsRow: { paddingHorizontal: 8 },
   tab: {
     paddingVertical: 8,

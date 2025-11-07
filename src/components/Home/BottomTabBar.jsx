@@ -20,17 +20,24 @@ const BottomTabBar = ({ activeKey = 'Home', onPressTab = () => {} }) => {
           const iconStyle = t.key === 'Home' ? styles.iconImageLarge : t.key === 'AiPick' ? styles.iconImageAiPick : styles.iconImageSmall;
           return (
             <TouchableOpacity key={t.key} onPress={() => onPressTab(t.key)} style={styles.item} activeOpacity={0.8}>
-              <Image
-                source={
-                  t.key === 'Home' ? require('../../assets/icons/Homeicon.png') :
-                  t.key === 'Reservation' ? require('../../assets/icons/Reservationicon.png') :
-                  t.key === 'AiPick' ? require('../../assets/icons/Aipick.png') :
-                  t.key === 'Notifications' ? require('../../assets/icons/Notificationicon.png') :
-                  require('../../assets/icons/Accounticon.png')
-                }
-                style={[iconStyle, { tintColor: isActive ? '#E53935' : '#C8C7CC' }, t.key === 'AiPick' && styles.aiPickIconOverride]}
-                resizeMode="contain"
-              />
+              {t.key === 'AiPick' ? (
+                <Image
+                  source={require('../../assets/icons/Aipickicon.png')}
+                  style={iconStyle}
+                  resizeMode="contain"
+                />
+              ) : (
+                <Image
+                  source={
+                    t.key === 'Home' ? require('../../assets/icons/Homeicon.png') :
+                    t.key === 'Reservation' ? require('../../assets/icons/Reservationicon.png') :
+                    t.key === 'Notifications' ? require('../../assets/icons/Notificationicon.png') :
+                    require('../../assets/icons/Accounticon.png')
+                  }
+                  style={[iconStyle, { tintColor: isActive ? '#E53935' : '#C8C7CC' }]}
+                  resizeMode="contain"
+                />
+              )}
               <Text style={[styles.label, labelColorStyle]}>{t.label}</Text>
             </TouchableOpacity>
           );
@@ -59,10 +66,10 @@ const styles = StyleSheet.create({
   item: { alignItems: 'center', justifyContent: 'center', flex: 1, paddingVertical: 8 },
   iconImageLarge: { width: 20, height: 20, marginBottom: 4, marginTop: 8, opacity: 1 },
   iconImageAiPick: { 
-    width: 24, 
-    height: 24, 
-    marginBottom: 4, 
-    marginTop: 8, 
+    width: 22,
+    height: 22,
+    marginBottom: 4,
+    marginTop: 8,
     opacity: 1,
   },
   aiPickIconOverride: {

@@ -22,8 +22,11 @@ import NotificationsScreen from '../screens/Notifications/NotificationsScreen';
 import AccountScreen from '../screens/Account/AccountScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
 import AllDishesScreen from '../screens/AllDishes/AllDishesScreen';
-import FollowingScreen from '../screens/Following/FollowingScreen';
-import ReserveTableScreen from '../screens/ReserveTable/ReserveTableScreen';
+import AiPickScreen from '../screens/AiPick/AiPickScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
+
+// NOTE: This file assumes you have installed @react-navigation/native and related packages.
+// If not, keep this as a scaffold or replace with your own navigator.
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -152,8 +155,8 @@ const AppNavigator = () => (
       {/* Nested screens (accessible from tabs) */}
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
-      <Stack.Screen name="Following" component={FollowingScreen} />
-      <Stack.Screen name="ReserveTable" component={ReserveTableScreen} />
+      <Stack.Screen name="AiPick" component={AiPickScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
