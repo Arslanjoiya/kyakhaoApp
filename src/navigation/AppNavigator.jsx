@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import OnboardingScreen from '../screens/Onboarding/OnboardingScreen';
@@ -27,10 +29,113 @@ import SearchScreen from '../screens/Search/SearchScreen';
 // If not, keep this as a scaffold or replace with your own navigator.
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
+// Main Tab Navigator for bottom tabs
+const MainTabs = () => (
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false,
+      tabBarStyle: {
+        backgroundColor: '#fff',
+        borderTopColor: '#E0E0E0',
+        borderTopWidth: 1,
+        paddingTop: 8,
+        paddingBottom: 8,
+        height: 88,
+        elevation: 0,
+        shadowOpacity: 0,
+      },
+      tabBarActiveTintColor: '#E53935',
+      tabBarInactiveTintColor: '#C8C7CC',
+      tabBarLabelStyle: {
+        fontSize: 12,
+        marginTop: 4,
+        fontWeight: '400',
+      },
+      tabBarIconStyle: {
+        marginTop: 8,
+      },
+    }}
+  >
+    <Tab.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../assets/icons/Homeicon.png')}
+            style={{ width: 20, height: 20, tintColor: color }}
+            resizeMode="contain"
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Reservation"
+      component={ReservationScreen}
+      options={{
+        tabBarLabel: 'Reservation',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../assets/icons/Reservationicon.png')}
+            style={{ width: 20, height: 20, tintColor: color }}
+            resizeMode="contain"
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="AiPick"
+      component={HomeScreen}
+      options={{
+        tabBarLabel: 'Ai Pick',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../assets/icons/Aipick.png')}
+            style={{ width: 24, height: 24, tintColor: color }}
+            resizeMode="contain"
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Notifications"
+      component={NotificationsScreen}
+      options={{
+        tabBarLabel: 'Notifications',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../assets/icons/Notificationicon.png')}
+            style={{ width: 20, height: 20, tintColor: color }}
+            resizeMode="contain"
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Account"
+      component={AccountScreen}
+      options={{
+        tabBarLabel: 'Account',
+        tabBarIcon: ({ color, size }) => (
+          <Image
+            source={require('../assets/icons/Accounticon.png')}
+            style={{ width: 20, height: 20, tintColor: color }}
+            resizeMode="contain"
+          />
+        ),
+      }}
+    />
+  </Tab.Navigator>
+);
+
+// Main App Navigator with nested structure
 const AppNavigator = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false, animation: 'fade' }}>
+      {/* Auth & Onboarding Stack */}
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
@@ -43,10 +148,11 @@ const AppNavigator = () => (
       <Stack.Screen name="ChooseLanguage" component={ChooseLanguageScreen} />
       <Stack.Screen name="Personalization" component={PersonalizationScreen} />
       <Stack.Screen name="ChoicesFood" component={ChoicesFoodScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Reservation" component={ReservationScreen} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Account" component={AccountScreen} />
+      
+      {/* Main App with Tabs */}
+      <Stack.Screen name="MainTabs" component={MainTabs} />
+      
+      {/* Nested screens (accessible from tabs) */}
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
       <Stack.Screen name="AiPick" component={AiPickScreen} />

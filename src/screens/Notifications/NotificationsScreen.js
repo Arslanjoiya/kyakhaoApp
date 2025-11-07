@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import BottomTabBar from '../../components/Home/BottomTabBar';
 
 // Mock notification data based on the design
 const NOTIFICATIONS = [
@@ -63,23 +62,9 @@ const NOTIFICATIONS = [
 ];
 
 const NotificationsScreen = ({ navigation }) => {
-  const [activeTab, setActiveTab] = useState('Notifications');
   const [followingUsers, setFollowingUsers] = useState(
     NOTIFICATIONS.filter(n => n.type === 'follow' && n.isFollowing).map(n => n.id)
   );
-
-  const handlePressTab = (key) => {
-    setActiveTab(key);
-    if (key === 'Home') {
-      navigation.navigate('Home');
-    } else if (key === 'Reservation') {
-      navigation.navigate('Reservation');
-    } else if (key === 'Notifications') {
-      return; // Already on this screen
-    } else if (key === 'Account') {
-      navigation.navigate('Account');
-    }
-  };
 
   const handleFollow = (userId) => {
     if (followingUsers.includes(userId)) {
@@ -159,11 +144,6 @@ const NotificationsScreen = ({ navigation }) => {
         {NOTIFICATIONS.map(renderNotificationItem)}
         <View style={styles.bottomSpacer} />
       </ScrollView>
-
-      {/* Bottom Tab Bar */}
-      <View style={styles.tabBarContainer}>
-        <BottomTabBar activeKey={activeTab} onPressTab={handlePressTab} />
-      </View>
     </View>
   );
 };
@@ -310,13 +290,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   bottomSpacer: {
-    height: 128,
-  },
-  tabBarContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
+    height: 88,
   },
 });
 

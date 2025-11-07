@@ -21,7 +21,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignIn = () => {
     // TODO: Implement sign in logic
     console.log('Sign in with:', { email, password });
-    navigation?.navigate('Home');
+    navigation?.navigate('MainTabs');
   };
 
   const handleSignUp = () => {

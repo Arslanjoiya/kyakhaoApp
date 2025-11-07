@@ -6,7 +6,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login Screen</Text>
-      <CommonButton title="Continue to Home" onPress={() => navigation?.navigate('Home')} />
+      <CommonButton title="Continue to Home" onPress={() => navigation?.navigate('MainTabs')} />
     </View>
   );
 };

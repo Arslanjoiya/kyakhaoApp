@@ -1,0 +1,3 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace KyakhaoApp.xcworkspace -scheme KyakhaoApp -configuration Debug -destination "platform=iOS Simulator,id=80B95490-35F8-447A-B438-7AE6BDA47FCE" -derivedDataPath build/DerivedData clean build
+
