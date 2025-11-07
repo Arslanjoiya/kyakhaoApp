@@ -93,7 +93,7 @@ const MainTabs = () => (
         tabBarLabel: 'Ai Pick',
         tabBarIcon: ({ color, size }) => (
           <Image
-            source={require('../assets/icons/Aipick.png')}
+            source={require('../assets/icons/Aipickicon.png')}
             style={{ width: 24, height: 24, tintColor: color }}
             resizeMode="contain"
           />

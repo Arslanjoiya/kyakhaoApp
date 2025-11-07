@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import HomeHeader from '../../components/Home/HomeHeader';
 import HeroCard from '../../components/Home/HeroCard';
 import SectionRow from '../../components/Home/SectionRow';
 import SmallCard from '../../components/Home/SmallCard';
 import RestaurantFeature from '../../components/Home/RestaurantFeature';
+
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <HomeHeader onPressSearch={() => navigation.navigate('Search')} />
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <HomeHeader onPressSearch={() => navigation.navigate('Search')} />
 
         <View style={styles.heroContainer}>
           <HeroCard source={require('../../assets/images/Homeimage.png.png')} />
@@ -48,24 +49,10 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-      <RestaurantFeature
-        image={require('../../assets/images/Homeimage4.png')}
-        title="The All-American Breakfast Muffin"
-        chef="by Amanda Lockwood"
-      />
-
-      <View style={styles.bottomSpacer} />
-    </ScrollView>
-      <View style={styles.tabBarContainer}>
-        <BottomTabBar
-          activeKey={activeTab}
-          onPressTab={(key) => {
-            setActiveTab(key);
-            if (key === 'Reservation') navigation.navigate('Reservation');
-            if (key === 'AiPick') navigation.navigate('AiPick');
-            if (key === 'Notifications') navigation.navigate('Notifications');
-            if (key === 'Account') navigation.navigate('Account');
-          }}
+        <RestaurantFeature
+          image={require('../../assets/images/Homeimage4.png')}
+          title="The All-American Breakfast Muffin"
+          chef="by Amanda Lockwood"
         />
 
         <View style={styles.bottomSpacer} />
