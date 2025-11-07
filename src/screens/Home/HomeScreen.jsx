@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <HomeHeader />
+      <HomeHeader onPressSearch={() => navigation.navigate('Search')} />
 
       <View style={styles.heroContainer}>
         <HeroCard source={require('../../assets/images/Homeimage.png.png')} />
@@ -65,6 +65,7 @@ const HomeScreen = ({ navigation }) => {
           onPressTab={(key) => {
             setActiveTab(key);
             if (key === 'Reservation') navigation.navigate('Reservation');
+            if (key === 'AiPick') navigation.navigate('AiPick');
             if (key === 'Notifications') navigation.navigate('Notifications');
             if (key === 'Account') navigation.navigate('Account');
           }}

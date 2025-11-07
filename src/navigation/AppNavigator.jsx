@@ -20,6 +20,8 @@ import NotificationsScreen from '../screens/Notifications/NotificationsScreen';
 import AccountScreen from '../screens/Account/AccountScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
 import AllDishesScreen from '../screens/AllDishes/AllDishesScreen';
+import AiPickScreen from '../screens/AiPick/AiPickScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
 
 // NOTE: This file assumes you have installed @react-navigation/native and related packages.
 // If not, keep this as a scaffold or replace with your own navigator.
@@ -47,6 +49,8 @@ const AppNavigator = () => (
       <Stack.Screen name="Account" component={AccountScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
+      <Stack.Screen name="AiPick" component={AiPickScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
