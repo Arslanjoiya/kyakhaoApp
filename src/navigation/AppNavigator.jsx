@@ -18,12 +18,19 @@ import ChooseLanguageScreen from '../screens/ChooseLanguage/ChooseLanguageScreen
 import PersonalizationScreen from '../screens/Personalization/PersonalizationScreen';
 import ChoicesFoodScreen from '../screens/ChoicesFood/ChoicesFoodScreen';
 import ReservationScreen from '../screens/Reservation/ReservationScreen';
+import ReserveTableScreen from '../screens/ReserveTable/ReserveTableScreen';
+import ReservationConfirmationScreen from '../screens/ReservationConfirmation/ReservationConfirmationScreen';
+import PaymentSetupScreen from '../screens/Payment/PaymentSetupScreen';
+import ReservationReceiptScreen from '../screens/ReservationReceipt/ReservationReceiptScreen';
 import NotificationsScreen from '../screens/Notifications/NotificationsScreen';
 import AccountScreen from '../screens/Account/AccountScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
 import AllDishesScreen from '../screens/AllDishes/AllDishesScreen';
 import AiPickScreen from '../screens/AiPick/AiPickScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
+import FollowingScreen from '../screens/Following/FollowingScreen';
+import FavoritesDetailsScreen from '../screens/FavoritesDetailsScreen';
+import FollowersScreen from '../screens/FollowersScreen';
 
 // NOTE: This file assumes you have installed @react-navigation/native and related packages.
 // If not, keep this as a scaffold or replace with your own navigator.
@@ -88,12 +95,12 @@ const MainTabs = () => (
     />
     <Tab.Screen
       name="AiPick"
-      component={HomeScreen}
+      component={AiPickScreen}
       options={{
         tabBarLabel: 'Ai Pick',
         tabBarIcon: ({ color, size }) => (
           <Image
-            source={require('../assets/icons/Aipick.png')}
+            source={require('../assets/icons/Aipickicon.png')}
             style={{ width: 24, height: 24, tintColor: color }}
             resizeMode="contain"
           />
@@ -157,6 +164,9 @@ const AppNavigator = () => (
       <Stack.Screen name="SeeAll" component={AllDishesScreen} />
       <Stack.Screen name="AiPick" component={AiPickScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="Following" component={FollowingScreen} />
+      <Stack.Screen name="FavoritesDetails" component={FavoritesDetailsScreen} />
+      <Stack.Screen name="Followers" component={FollowersScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

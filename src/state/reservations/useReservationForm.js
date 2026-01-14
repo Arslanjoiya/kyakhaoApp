@@ -37,8 +37,8 @@ export default function useReservationForm(initial = {}) {
   const submit = useCallback(async () => {
     setSubmitting(true);
     try {
-      await createReservation(form);
-      // In a real app, navigate to confirmation
+      const result = await createReservation(form);
+      return result;
     } finally {
       setSubmitting(false);
     }

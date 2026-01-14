@@ -1,8 +1,18 @@
 export async function getRestaurants() {
   // mock list
   return [
-    { id: 'r1', name: 'Premium Eats Downtown' },
-    { id: 'r2', name: 'Seaside Bistro' },
+    {
+      id: 'r1',
+      name: 'The Gourmet Haven',
+      address: '123 Culinary Lane, Foodville, CA 90210',
+      defaultTable: 'Window View (Table 12)',
+    },
+    {
+      id: 'r2',
+      name: 'Seaside Bistro',
+      address: '88 Oceanfront Drive, Bayview, CA 94019',
+      defaultTable: 'Ocean Terrace (Table 6)',
+    },
   ];
 }
 
